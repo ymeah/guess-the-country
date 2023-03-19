@@ -12,17 +12,23 @@ let country;
 
 function randomCountry() {
   // TODO: pick a random country from the COUNTRIES variable and return it
+  let randomCountryIndex = Math.floor(Math.random() * COUNTRIES.length);
+  return COUNTRIES[randomCountryIndex]
 }
+
+
 
 function startGame() {
   console.clear();
 
   // Initialize the game state
   country = randomCountry();
+  answer = country.name.common.toUpperCase();
   // TODO: what field of country to set 'answer' to?
   guess = [];
   guessesLeft = 10;
-  console.log("the answer is:", answer);
+  console.log("the answer is:");
+  console.log(answer);
   for (let i = 0; i < answer.length; i++) {
     // TODO: how to handle letters not on our keyboard?
     if (answer[i] === " ") {
@@ -47,16 +53,17 @@ function showHint() {
   // create an image element for the flag
   let img = document.createElement("img");
   // TODO: How to read image url from country data?
-  // img.src = ???
+   img.src = country.flags.png
+   console.log(img.src)
   img.style.border = "thin solid grey";
   card.appendChild(img);
 
   // create a paragraph element for info
   let p = document.createElement("p");
   // TODO: display other hints, e.g.
-  // Continent(s), population, area, capital(s), etc
-  // p.innerHTML += `Continent: ...<br>`;
-  // p.innerHTML += `Population: ...<br>`;
+   //Continent(s), population, area, capital(s), etc
+   //p.innerHTML += `Continent: ...<br>`;
+   p.innerHTML += `Population:${country.population}<br>`;
   card.appendChild(p);
 
   cardContainerDiv.appendChild(card); // create and add the card to the container
@@ -74,7 +81,7 @@ function updateResults() {
   } else if (guessesLeft > 0) {
     resultsDiv.innerHTML = "You have " + guessesLeft + " guesses left";
   } else {
-    // guessesLeft == 0
+     guessesLeft == 0
     resultsDiv.innerHTML = "You have no more guesses left, game over!<br>";
     resultsDiv.innerHTML = "The answer was: " + answer;
     gameOver = true;
